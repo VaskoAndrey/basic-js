@@ -53,10 +53,26 @@ function transform(arr) {
       }
    }
    for (let i = 0; i < result.length; i++) {
+      if(arr[i] == '--discard-next') {
+         if(i == arr.length - 1) {
+            continue;
+         }
+      if(arr[i] == '--discard-prev') {
+         if(i == 0) {
+            continue;
+         }
+      if(arr[i] == '--double-next') {
+         if(i == arr.length - 1) {
+            continue;
+         }
+      if(arr[i] == '--double-prev') {
+         if(i == 0) {
+            continue;
+         }
       if(typeof arr[i] == 'string') result.splice(i, 1)
    }
    return result;
-}
+}}}}}
 
 module.exports = {
   transform
