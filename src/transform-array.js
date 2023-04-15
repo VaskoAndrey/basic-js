@@ -18,61 +18,31 @@ function transform(arr) {
       throw new Error('\'arr\' parameter must be an instance of the Array!')
       return false;
    }
-   let result = arr;
+   let result = [];
    for(let i = 0; i < arr.length; i++) {
-      if(typeof arr[i] !== 'number') {
-         continue;
-      }
       if(arr[i] == '--discard-next') {
-         if(i == arr.length - 1) {
-            result.splice(i, 1);
-            continue;
+         i++;
+      } else if(arr[i] == '--discard-prev') {
+         if(i > 0 && arr[i - 2] !== '--discard-next') {
+            result.pop();
          }
-         result.splice(i + 1, 1);
+      } else if(arr[i] == '--double-next') {
+         if(i < arr.length - 1) {
+            result.push(arr[i + 1]);
+         }
+      } else if(arr[i] == '--double-prev') {
+         if(i > 0 && arr[i - 2] !== '--discard-next') {
+            result.push(arr[i - 1]);
+         }
+      } else {
+         result.push(arr[i]);
       }
-      if(arr[i] == '--discard-prev') {
-         if(i == 0) {
-            result.splice(i, 1);
-            continue;
-         }
-         result.splice(i - 1, 1);
-      }
-      if(arr[i] == '--double-next') {
-         if(i == arr.length - 1) {
-            result.splice(i, 1);
-            continue;
-         }
-         result.splice(i + 1, 0, arr[i + 1]);
-      }
-      if(arr[i] == '--double-prev') {
-         if(i == 0) {
-            result.splice(i, 1);
-            continue;
-         }
-         result.splice(i - 1, 0, arr[i - 1]);
-      }
-   }
-   for (let i = 0; i < result.length; i++) {
-      if(arr[i] == '--discard-next') {
-         if(i == arr.length - 1) {
-            continue;
-         }
-      if(arr[i] == '--discard-prev') {
-         if(i == 0) {
-            continue;
-         }
-      if(arr[i] == '--double-next') {
-         if(i == arr.length - 1) {
-            continue;
-         }
-      if(arr[i] == '--double-prev') {
-         if(i == 0) {
-            continue;
-         }
-      if(typeof arr[i] == 'string') result.splice(i, 1)
    }
    return result;
-}}}}}
+}
+
+ 
+ 
 
 module.exports = {
   transform
